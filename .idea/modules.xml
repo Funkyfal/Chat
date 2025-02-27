@@ -3,9 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Chat.iml" filepath="$PROJECT_DIR$/.idea/Chat.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/auth_service.iml" filepath="$PROJECT_DIR$/.idea/modules/auth_service.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/auth_service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/auth_service.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/auth_service.test.iml" filepath="$PROJECT_DIR$/.idea/modules/auth_service.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.example.chat_service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/org.example.chat_service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.example.chat_service.test.iml" filepath="$PROJECT_DIR$/.idea/modules/org.example.chat_service.test.iml" />
     </modules>
   </component>
 </project>
