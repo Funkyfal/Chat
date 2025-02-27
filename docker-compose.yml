@@ -12,7 +12,7 @@ services:
     depends_on:
       - db-auth
     ports:
-      - "8008:8008"
+      - "8008:8080"
 
   db-auth:
     image: postgres:latest
