@@ -31,3 +31,18 @@ services:
       POSTGRES_PASSWORD: DBPASSWORD
     ports:
       - "5435:5432"
+
+  db-message:
+    image: mongo:latest
+    container_name: db-message
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: dbpassword
+    ports:
+      - "27017:27017"
+    volumes:
+      - message_db_data:/data/db
+
+volumes:
+  message_db_data:

@@ -9,12 +9,15 @@
         </processorPath>
         <module name="Chat.auth_service.main" />
         <module name="Chat.chat_service.main" />
+        <module name="Chat.message_service.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="auth_service" target="17" />
       <module name="auth_service.main" target="17" />
       <module name="auth_service.test" target="17" />
+      <module name="Chat.untitled.main" target="17" />
+      <module name="Chat.untitled.test" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
