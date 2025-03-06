@@ -27,7 +27,6 @@ repositories {
 dependencies {
 	//implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
-	implementation("org.springframework.boot:spring-boot-starter-websocket")
 	implementation("org.springframework.kafka:spring-kafka")
 	implementation("io.projectreactor.kafka:reactor-kafka")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
