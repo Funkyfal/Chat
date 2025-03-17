@@ -1,3 +1,6 @@
 *.lock
 *.bin
 *.patch
+file-system.probe
+.gradle
+build
