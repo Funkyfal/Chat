@@ -13,7 +13,7 @@ class ChatWebSocketHandler(private val chatKafkaProducer: ChatKafkaProducer) : W
         return session.receive()
             .map { it.payloadAsText }
             .doOnNext { message ->
-                println("💬 Получено сообщение из WebSocket: $message")
+                println("Получено сообщение из WebSocket: $message")
                 chatKafkaProducer.sendMessage(message)
             }
             .then()
