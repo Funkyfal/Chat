@@ -4,28 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dc15a1e6-624b-4231-a3e5-3a755f0d019d" name="Changes" comment="commit before new branch">
-      <change afterPath="$PROJECT_DIR$/chat_service/src/main/kotlin/chat/chat_service/kafka/ChatKafkaProducer.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat_service/src/main/kotlin/chat/chat_service/kafka/KafkaConfig.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat_service/src/main/kotlin/chat/chat_service/websocket/ChatWebSocketHandler.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat_service/src/main/kotlin/chat/chat_service/websocket/WebSocketConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.5/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.5/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/checksums/md5-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.5/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/checksums/sha1-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" afterDir="false" />
+    <list default="true" id="dc15a1e6-624b-4231-a3e5-3a755f0d019d" name="Changes" comment="added .gitignore">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2025-02-27,_16_44_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2025-02-27,_16_46_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2025-02-27__16_44__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2025-02-27__16_46__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_2025-02-27,_16_46_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_2025-02-27__16_46__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth_service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/auth_service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat_service/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/chat_service/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat_service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/chat_service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/message_service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/message_service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat_service/src/main/kotlin/chat/chat_service/TestController.kt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,11 +70,6 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="main" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -114,10 +101,10 @@
     &quot;Gradle.Tests in 'Chat.message_service'.executor&quot;: &quot;Run&quot;,
     &quot;Kotlin.AuthServiceApplicationKt.executor&quot;: &quot;Run&quot;,
     &quot;Kotlin.ChatServiceApplicationKt.executor&quot;: &quot;Run&quot;,
-    &quot;Kotlin.MessageServiceApplicationKt.executor&quot;: &quot;Run&quot;,
+    &quot;Kotlin.MessageServiceApplicationKt.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;char__service&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/admin/IdeaProjects/Chat&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
@@ -130,7 +117,7 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected="Kotlin.ChatServiceApplicationKt">
+  <component name="RunManager" selected="Kotlin.MessageServiceApplicationKt">
     <configuration name="AuthServiceApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="chat.auth_service.AuthServiceApplicationKt" />
       <module name="Chat.auth_service.main" />
@@ -154,8 +141,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Kotlin.ChatServiceApplicationKt" />
         <item itemvalue="Kotlin.MessageServiceApplicationKt" />
+        <item itemvalue="Kotlin.ChatServiceApplicationKt" />
         <item itemvalue="Kotlin.AuthServiceApplicationKt" />
       </list>
     </recent_temporary>
@@ -217,13 +204,13 @@
       <option name="project" value="LOCAL" />
       <updated>1741183014485</updated>
     </task>
-    <task id="LOCAL-00007" summary="commit before new branch">
+    <task id="LOCAL-00007" summary="added .gitignore">
       <option name="closed" value="true" />
-      <created>1741255978837</created>
+      <created>1742220559155</created>
       <option name="number" value="00007" />
       <option name="presentableId" value="LOCAL-00007" />
       <option name="project" value="LOCAL" />
-      <updated>1741255978837</updated>
+      <updated>1742220559155</updated>
     </task>
     <option name="localTasksCounter" value="8" />
     <servers />
@@ -238,7 +225,7 @@
     <MESSAGE value="trying to keep streak on :)" />
     <MESSAGE value="removed services from docker, only db left for convenience" />
     <MESSAGE value="configured MongoDB with docker" />
-    <MESSAGE value="commit before new branch" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit before new branch" />
+    <MESSAGE value="added .gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="added .gitignore" />
   </component>
 </project>
