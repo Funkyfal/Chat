@@ -2,5 +2,6 @@
 *.bin
 *.patch
 file-system.probe
+.idea
 .gradle
 build
