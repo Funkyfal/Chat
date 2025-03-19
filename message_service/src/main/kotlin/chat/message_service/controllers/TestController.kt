@@ -1,5 +1,7 @@
-package chat.message_service
+package chat.message_service.controllers
 
+import chat.message_service.entities.Message
+import chat.message_service.repositories.MessageRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping

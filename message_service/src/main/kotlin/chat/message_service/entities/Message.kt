@@ -1,4 +1,4 @@
-package chat.message_service
+package chat.message_service.entities
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document

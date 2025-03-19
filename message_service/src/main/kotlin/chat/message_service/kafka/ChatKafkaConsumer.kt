@@ -1,7 +1,7 @@
 package chat.message_service.kafka
 
-import chat.message_service.Message
-import chat.message_service.MessageRepository
+import chat.message_service.entities.Message
+import chat.message_service.repositories.MessageRepository
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Service
 
