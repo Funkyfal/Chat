@@ -12,6 +12,6 @@ class TestController {
 
     @GetMapping("/admin/hello")
     fun greetingAdmin(): String{
-        return "hello my dear admin"
+        return "hello my dear admin!"
     }
 }
