@@ -22,8 +22,10 @@ class SecurityConfig(
         return http
             .csrf { it.disable() }
             .authorizeHttpRequests {
-                it.requestMatchers("/auth/**").permitAll()   // Регистрация/логин без токена
-                it.anyRequest().authenticated()              // Остальные — только с токеном
+                it.requestMatchers("/auth/**").permitAll()
+                it.requestMatchers("/user/**").hasAuthority("ROLE_USER")
+                it.requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                //it.anyRequest().authenticated()
             }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)

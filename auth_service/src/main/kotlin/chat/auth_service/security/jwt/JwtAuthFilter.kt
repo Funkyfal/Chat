@@ -30,7 +30,6 @@ class JwtAuthFilter(
         val token = authHeader.substring(7)
         val username = jwtUtil.validateToken(token)
 
-        // Если токен валидный и нет аутентификации в контексте, ставим пользователя
         if (username != null && SecurityContextHolder.getContext().authentication == null) {
             val userDetails = userDetailsService.loadUserByUsername(username)
             val authToken = UsernamePasswordAuthenticationToken(

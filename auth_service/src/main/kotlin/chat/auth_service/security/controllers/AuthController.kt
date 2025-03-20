@@ -30,7 +30,7 @@ class AuthController(
             id = null,
             username = request.username,
             password = passwordEncoder.encode(request.password),
-            roles = setOf("ROLE_USER")
+            roles = request.roles
         )
         userRepository.save(newUser)
         return ResponseEntity.ok("User registered successfully")
@@ -41,12 +41,10 @@ class AuthController(
         val user = userRepository.findByUsername(request.username)
             ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
 
-        // Проверяем пароль
         if (!passwordEncoder.matches(request.password, user.password)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
         }
 
-        // Генерируем токен
         val token = jwtUtil.generateToken(user.username)
         return ResponseEntity.ok(JwtResponse(token))
     }
