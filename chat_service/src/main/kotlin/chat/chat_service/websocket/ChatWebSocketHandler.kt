@@ -2,6 +2,8 @@ package chat.chat_service.websocket
 
 import chat.chat_service.kafka.ChatKafkaProducer
 import chat.chat_service.security.jwt.JwtUtil
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.socket.WebSocketHandler
 import org.springframework.web.reactive.socket.WebSocketSession
@@ -10,7 +12,8 @@ import reactor.core.publisher.Mono
 @Component
 class ChatWebSocketHandler(
     private val chatKafkaProducer: ChatKafkaProducer,
-    private val jwtUtil: JwtUtil
+    private val jwtUtil: JwtUtil,
+    private val objectMapper: ObjectMapper
 ) : WebSocketHandler {
 
     override fun handle(session: WebSocketSession): Mono<Void> {
@@ -26,9 +29,20 @@ class ChatWebSocketHandler(
 
         return session.receive()
             .map { it.payloadAsText }
-            .doOnNext { message ->
-                println("От $username получено сообщение: $message")
-                chatKafkaProducer.sendMessage("[$username] $message")
+            .flatMap { json ->
+                val chatMsg = objectMapper.readValue<ChatMessage>(json)
+                val fullMsg = ChatMessage(
+                    text = chatMsg.text,
+                    receiverId = chatMsg.receiverId
+                )
+                val kafkaPayload = mapOf(
+                    "text" to fullMsg.text,
+                    "senderId" to username,
+                    "receiverId" to fullMsg.receiverId,
+                    "timestamp" to System.currentTimeMillis()
+                )
+                chatKafkaProducer.sendMessage(objectMapper.writeValueAsString(kafkaPayload))
+                Mono.empty<Void>()
             }
             .then()
     }
@@ -43,4 +57,9 @@ class ChatWebSocketHandler(
         }
         return null
     }
+
+    data class ChatMessage(
+        val text: String,
+        val receiverId: String
+    )
 }

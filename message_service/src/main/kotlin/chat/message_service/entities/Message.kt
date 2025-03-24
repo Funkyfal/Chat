@@ -7,5 +7,8 @@ import org.springframework.data.mongodb.core.mapping.Document
 data class Message(
     @Id
     var id: String? = null,
-    var text: String
+    var text: String,
+    var senderId: String,
+    var receiverId: String,
+    var timestamp: Long = System.currentTimeMillis()
 )
