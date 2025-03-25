@@ -26,7 +26,6 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
-	//implementation("org.springframework.boot:spring-boot-starter-web")
 
 	implementation("org.springframework.kafka:spring-kafka")
 	implementation("io.projectreactor.kafka:reactor-kafka")
@@ -47,6 +46,10 @@ dependencies {
 	implementation("io.jsonwebtoken:jjwt-api:0.11.5")
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+
+	implementation("org.springframework.boot:spring-boot-starter-data-redis:3.4.4")
+	implementation("org.springframework.data:spring-data-redis:3.4.4")
+	implementation("io.lettuce:lettuce-core")
 }
 
 kotlin {
