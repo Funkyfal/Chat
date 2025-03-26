@@ -1,23 +1,27 @@
 package chat.chat_service.websocket
 
 import chat.chat_service.kafka.ChatKafkaProducer
+import chat.chat_service.redis.RedisChatListener
 import chat.chat_service.security.jwt.JwtUtil
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import org.springframework.data.redis.core.StringRedisTemplate
+import org.springframework.data.redis.listener.ChannelTopic
+import org.springframework.data.redis.listener.RedisMessageListenerContainer
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.socket.WebSocketHandler
-import org.springframework.web.reactive.socket.WebSocketMessage
 import org.springframework.web.reactive.socket.WebSocketSession
 import reactor.core.publisher.Mono
 import java.util.concurrent.ConcurrentHashMap
 
-
-//need to add Redis
 @Component
 class ChatWebSocketHandler(
     private val chatKafkaProducer: ChatKafkaProducer,
     private val jwtUtil: JwtUtil,
-    private val objectMapper: ObjectMapper
+    private val objectMapper: ObjectMapper,
+    private val redisChatListener: RedisChatListener,
+    private val redisMessageListenerContainer: RedisMessageListenerContainer,
+    private val redisTemplate: StringRedisTemplate
 ) : WebSocketHandler {
 
     companion object {
@@ -30,17 +34,18 @@ class ChatWebSocketHandler(
         val username = token?.let { jwtUtil.validateToken(it) }
 
         if (username == null) {
-            println("WebSocket: нет валидного токена -> закрываем соединение")
             return session.close()
         }
-
         println("WebSocket: пользователь $username подключился")
-        sessions[username] = session
+        redisChatListener.sessions[username] = session
+
+        val topic = ChannelTopic("chat:$username")
+        redisMessageListenerContainer.addMessageListener(redisChatListener, topic)
 
         return session.receive()
-            .map(WebSocketMessage::getPayloadAsText)
+            .map { it.payloadAsText }
             .flatMap { json ->
-                val chatMsg: ChatMessage = objectMapper.readValue(json)
+                val chatMsg = objectMapper.readValue<ChatMessage>(json)
 
                 val kafkaPayload = mapOf(
                     "text" to chatMsg.text,
@@ -48,25 +53,23 @@ class ChatWebSocketHandler(
                     "receiverId" to chatMsg.receiverId,
                     "timestamp" to System.currentTimeMillis()
                 )
-
                 chatKafkaProducer.sendMessage(objectMapper.writeValueAsString(kafkaPayload))
 
-                val receiverSession = sessions[chatMsg.receiverId]
-                if (receiverSession != null && receiverSession.isOpen) {
-                    val outMsg = mapOf(
-                        "text" to chatMsg.text,
-                        "senderId" to username,
-                        "timestamp" to System.currentTimeMillis()
-                    )
-                    val outJson = objectMapper.writeValueAsString(outMsg)
+                val outPayload = mapOf(
+                    "text" to chatMsg.text,
+                    "senderId" to username,
+                    "timestamp" to System.currentTimeMillis()
+                )
 
-                    return@flatMap receiverSession.send(Mono.just(receiverSession.textMessage(outJson)))
-                }
+                val outJson = objectMapper.writeValueAsString(outPayload)
+                val channel = "chat:${chatMsg.receiverId}"
+                redisTemplate.convertAndSend(channel, outJson)
 
                 Mono.empty<Void>()
             }
             .doFinally {
-                sessions.remove(username)
+                redisMessageListenerContainer.removeMessageListener(redisChatListener, topic)
+                redisChatListener.sessions.remove(username)
                 println("WebSocket: пользователь $username отключился")
             }
             .then()
