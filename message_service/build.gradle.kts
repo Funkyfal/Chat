@@ -36,6 +36,10 @@ dependencies {
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testImplementation("org.springframework.kafka:spring-kafka-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+	implementation("org.springframework.boot:spring-boot-starter-data-redis:3.4.4")
+	implementation("org.springframework.data:spring-data-redis:3.4.4")
+	implementation("io.lettuce:lettuce-core")
 }
 
 kotlin {
