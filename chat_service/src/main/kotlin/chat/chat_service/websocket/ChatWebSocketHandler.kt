@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component
 import org.springframework.web.reactive.socket.WebSocketHandler
 import org.springframework.web.reactive.socket.WebSocketSession
 import reactor.core.publisher.Mono
-import java.util.concurrent.ConcurrentHashMap
 
 @Component
 class ChatWebSocketHandler(
@@ -23,10 +22,6 @@ class ChatWebSocketHandler(
     private val redisMessageListenerContainer: RedisMessageListenerContainer,
     private val redisTemplate: StringRedisTemplate
 ) : WebSocketHandler {
-
-    companion object {
-        private val sessions = ConcurrentHashMap<String, WebSocketSession>()
-    }
 
     override fun handle(session: WebSocketSession): Mono<Void> {
         val query = session.handshakeInfo.uri.query
@@ -45,27 +40,63 @@ class ChatWebSocketHandler(
         return session.receive()
             .map { it.payloadAsText }
             .flatMap { json ->
-                val chatMsg = objectMapper.readValue<ChatMessage>(json)
+                try {
+                    val chatMsg = objectMapper.readValue<ChatMessage>(json)
+                    when (chatMsg.type) {
+                        "setActiveChat" -> {
+                            val activeChat = chatMsg.activeChat
+                           if(activeChat.isNullOrBlank()) {
+                                println("Невозможно переключиться на другой чат, так как он null или пуст")
+                                return@flatMap Mono.empty<Void>()
+                               TODO("сделать эксепшн")
+                            }
+                            redisTemplate.opsForValue().set("active_chat:$username", activeChat)
+                            println("Установлен новый чат $username вместе с $activeChat")
+                            Mono.empty<Void>()
+                        }
 
-                val kafkaPayload = mapOf(
-                    "text" to chatMsg.text,
-                    "senderId" to username,
-                    "receiverId" to chatMsg.receiverId,
-                    "timestamp" to System.currentTimeMillis()
-                )
-                chatKafkaProducer.sendMessage(objectMapper.writeValueAsString(kafkaPayload))
+                        "chatMessage" -> {
+                            if (chatMsg.text.isNullOrBlank() || chatMsg.receiverId.isNullOrBlank()){
+                                println("При отправке сообщения от $username text или receiverId оказались пустыми")
+                                return@flatMap Mono.empty<Void>()
+                                TODO("сделать эксепшн")
+                            }
+                            val kafkaPayload = mapOf(
+                                "text" to chatMsg.text,
+                                "senderId" to username,
+                                "receiverId" to chatMsg.receiverId,
+                                "timestamp" to System.currentTimeMillis()
+                            )
+                            chatKafkaProducer.sendMessage(objectMapper.writeValueAsString(kafkaPayload))
+                            val outPayload = mapOf(
+                                "text" to chatMsg.text,
+                                "senderId" to username,
+                                "timestamp" to System.currentTimeMillis()
+                            )
+                            val outJson = objectMapper.writeValueAsString(outPayload)
+                            val channel = "chat:${chatMsg.receiverId}"
+                            redisTemplate.convertAndSend(channel, outJson)
+                            Mono.empty<Void>()
+                        }
 
-                val outPayload = mapOf(
-                    "text" to chatMsg.text,
-                    "senderId" to username,
-                    "timestamp" to System.currentTimeMillis()
-                )
+                        else -> {
+                            val errorMsg = "Неверный тип сообщения ${chatMsg.type}"
+                            session.send(Mono.just(session.textMessage(errorMsg))).subscribe()
+                            Mono.empty<Void>()
+                            TODO("сделать эксепшн")
+                        }
+                    }
+                } catch (e: Exception) {
 
-                val outJson = objectMapper.writeValueAsString(outPayload)
-                val channel = "chat:${chatMsg.receiverId}"
-                redisTemplate.convertAndSend(channel, outJson)
-
-                Mono.empty<Void>()
+                    e.printStackTrace()
+                    session.send(
+                        Mono.just(
+                            session.textMessage("Ошибка обработки сообщения ${e.message}")
+                        )
+                    ).subscribe()
+                    Mono.empty<Void>()
+                    TODO("сделать эксепшн")
+                }
             }
             .doFinally {
                 redisMessageListenerContainer.removeMessageListener(redisChatListener, topic)
@@ -87,7 +118,9 @@ class ChatWebSocketHandler(
     }
 
     data class ChatMessage(
-        val text: String,
-        val receiverId: String
+        val type: String,
+        val text: String? = null,
+        val receiverId: String? = null,
+        val activeChat: String? = null
     )
 }
