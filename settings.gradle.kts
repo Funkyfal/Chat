@@ -6,3 +6,4 @@ rootProject.name = "Chat"
 include("auth_service")
 include("chat_service")
 include("message_service")
+include("notification_service")
