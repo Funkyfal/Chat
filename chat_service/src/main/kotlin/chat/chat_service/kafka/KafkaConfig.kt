@@ -11,4 +11,9 @@ class KafkaConfig {
     fun chatTopic(): NewTopic {
         return NewTopic("chat-messages", 1, 1.toShort())
     }
+
+    @Bean
+    fun notificationTopic(): NewTopic{
+        return NewTopic("notification-topic", 1, 1.toShort())
+    }
 }
