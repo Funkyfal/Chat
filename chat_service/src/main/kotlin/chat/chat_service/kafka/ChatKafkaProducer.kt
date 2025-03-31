@@ -10,6 +10,10 @@ class ChatKafkaProducer(
     fun sendMessage(message: String){
         println("Отправка сообщения: $message")
         kafkaTemplate.send("chat-messages", message)
-        kafkaTemplate.send("notification-topic", message)
+    }
+
+    fun sendNotification(notification: String){
+        println("Отправка уведомления $notification")
+        kafkaTemplate.send("notification-topic", notification)
     }
 }

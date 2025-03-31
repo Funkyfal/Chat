@@ -61,13 +61,23 @@ class ChatWebSocketHandler(
                                 return@flatMap Mono.empty<Void>()
                                 TODO("сделать эксепшн")
                             }
-                            val kafkaPayload = mapOf(
+                            val messagePayload = mapOf(
                                 "text" to chatMsg.text,
                                 "senderId" to username,
                                 "receiverId" to chatMsg.receiverId,
                                 "timestamp" to System.currentTimeMillis()
                             )
-                            chatKafkaProducer.sendMessage(objectMapper.writeValueAsString(kafkaPayload))
+                            chatKafkaProducer.sendMessage(objectMapper.writeValueAsString(messagePayload))
+
+                            val notificationPayload = mapOf(
+                                "senderId" to username,
+                                "receiverId" to chatMsg.receiverId,
+                                "messagePreview" to if (chatMsg.text.length > 20) chatMsg.text.take(20) + "..." else chatMsg.text,
+                                "timestamp" to System.currentTimeMillis(),
+                                "read" to false
+                            )
+                            chatKafkaProducer.sendNotification(objectMapper.writeValueAsString(notificationPayload))
+
                             val outPayload = mapOf(
                                 "text" to chatMsg.text,
                                 "senderId" to username,

@@ -19,6 +19,11 @@ class NotificationKafkaConsumer(
     @KafkaListener(topics = ["notification-topic"], groupId = "notification_group")
     fun listen(record: ConsumerRecord<String, String>){
         val notification = objectMapper.readValue<Notification>(record.value())
-        println(notification)
+
+        val activeChat = redisTemplate.opsForValue().get("active_chat:${notification.receiverId}")
+
+        if(activeChat == null || activeChat != notification.senderId){
+            redisTemplate.convertAndSend("notification:${notification.receiverId}", record.value())
+        }
     }
 }
