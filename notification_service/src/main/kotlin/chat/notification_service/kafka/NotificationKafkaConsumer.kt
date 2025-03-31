@@ -20,6 +20,8 @@ class NotificationKafkaConsumer(
     fun listen(record: ConsumerRecord<String, String>){
         val notification = objectMapper.readValue<Notification>(record.value())
 
+        notificationRepository.save(notification)
+
         val activeChat = redisTemplate.opsForValue().get("active_chat:${notification.receiverId}")
 
         if(activeChat == null || activeChat != notification.senderId){
