@@ -6,9 +6,10 @@ import org.springframework.data.mongodb.core.mapping.Document
 @Document(collection = "messages")
 data class Message(
     @Id
-    var id: String? = null,
-    var text: String,
-    var senderId: String,
-    var receiverId: String,
-    var timestamp: Long = System.currentTimeMillis()
+    val id: String? = null,
+    val text: String? = null,
+    val fileUrl: String? = null,
+    val senderId: String,
+    val receiverId: String,
+    val timestamp: Long = System.currentTimeMillis()
 )

@@ -96,10 +96,57 @@ class ChatWebSocketHandler(
                                 redisTemplate.convertAndSend(channel, outJson)
                                 Mono.empty<Void>()
                             } else {
-                                println("Пользователь ${chatMsg.receiverId} не в чате с $username, отправляем" +
-                                        "только уведомление.")
+                                println(
+                                    "Пользователь ${chatMsg.receiverId} не в чате с $username, отправляем" +
+                                            "только уведомление."
+                                )
                                 Mono.empty<Void>()
                             }
+                        }
+
+                        "fileMessage" -> {
+                            if(chatMsg.fileUrl.isNullOrBlank() || chatMsg.receiverId.isNullOrBlank()){
+                                println("При отправке сообщения от $username fileUrl или receiverId оказались пустыми")
+                                return@flatMap Mono.empty<Void>()
+                                TODO("сделать эксепшн")
+                            }
+                            val currentTimestamp = System.currentTimeMillis()
+
+                            val messagePayload = mapOf(
+                                "fileUrl" to chatMsg.fileUrl,
+                                "text" to chatMsg.text,
+                                "senderId" to username,
+                                "receiverId" to chatMsg.receiverId,
+                                "timestamp" to currentTimestamp
+                            )
+
+                            chatKafkaProducer.sendMessage(objectMapper.writeValueAsString(messagePayload))
+
+                            val notificationPayload = mapOf(
+                                "senderId" to username,
+                                "receiverId" to chatMsg.receiverId,
+                                "messagePreview" to "📎Файл",
+                                "timestamp" to currentTimestamp,
+                                "read" to false
+                            )
+                            chatKafkaProducer.sendNotification(objectMapper.writeValueAsString(notificationPayload))
+
+                            val receiverActiveChat = redisTemplate.opsForValue().get("active_chat:${chatMsg.receiverId}")
+                            if (receiverActiveChat == username) {
+                                val outPayload = mapOf(
+                                    "fileUrl" to chatMsg.fileUrl,
+                                    "text" to chatMsg.text,
+                                    "senderId" to username,
+                                    "timestamp" to currentTimestamp
+                                )
+                                val outJson = objectMapper.writeValueAsString(outPayload)
+                                val channel = "chat:${chatMsg.receiverId}"
+                                redisTemplate.convertAndSend(channel, outJson)
+                            } else {
+                                println("Пользователь ${chatMsg.receiverId} не в активном чате с $username, уведомление отправлено")
+                            }
+
+                            Mono.empty<Void>()
                         }
 
                         else -> {
@@ -144,6 +191,7 @@ class ChatWebSocketHandler(
         val type: String,
         val text: String? = null,
         val receiverId: String? = null,
-        val activeChat: String? = null
+        val activeChat: String? = null,
+        val fileUrl: String? = null
     )
 }

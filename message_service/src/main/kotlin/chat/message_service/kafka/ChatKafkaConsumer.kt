@@ -26,7 +26,8 @@ class ChatKafkaConsumer(
     fun listen(messageJson: String) {
         val node = objectMapper.readTree(messageJson)
         val msg = Message(
-            text = node["text"].asText(),
+            text = if(node.has("text")) node["text"].asText() else null,
+            fileUrl = if(node.has("fileUrl")) node["fileUrl"].asText() else null,
             senderId = node["senderId"].asText(),
             receiverId = node["receiverId"].asText(),
             timestamp = node["timestamp"].asLong()
