@@ -33,12 +33,22 @@ class MinioService(
         return "$endpoint/$bucketName/$objectName"
     }
 
-    fun downloadFile(fileName: String): ByteArray {
-        return minioClient.getObject(
+    fun downloadFile(fileName: String): Pair<ByteArray, String> {
+        val obj = minioClient.getObject(
             GetObjectArgs.builder()
                 .bucket(bucketName)
                 .`object`(fileName)
                 .build()
-        ).readAllBytes()
+        )
+
+        val contentType = minioClient.statObject(
+            io.minio.StatObjectArgs.builder()
+                .bucket(bucketName)
+                .`object`(fileName)
+                .build()
+        ).contentType()
+
+        return Pair(obj.readAllBytes(), contentType)
+        TODO("throw an exception")
     }
 }

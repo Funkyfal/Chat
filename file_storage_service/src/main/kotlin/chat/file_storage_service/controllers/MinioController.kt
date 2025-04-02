@@ -19,9 +19,9 @@ class MinioController(
 
     @GetMapping("/{fileName}")
     fun downloadFile(@PathVariable fileName: String): ResponseEntity<ByteArray> {
-        val fileBytes = minioService.downloadFile(fileName)
+        val (fileBytes, contentType) = minioService.downloadFile(fileName)
         return ResponseEntity.ok()
-            .contentType(MediaType.APPLICATION_OCTET_STREAM)
+            .contentType(MediaType.parseMediaType(contentType))
             .body(fileBytes)
     }
 }
