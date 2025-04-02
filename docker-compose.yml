@@ -1,26 +1,13 @@
 version: '3.8'
 services:
-  #auth-service:
-    #build:
-     # context: ./auth_service
-      #dockerfile: Dockerfile
-    #image: auth_service
-    #environment:
-     # - SPRING_DATASOURCE_URL=jdbc:postgresql://db-auth:5432/authentication_db
-      #- SPRING_DATASOURCE_USERNAME=postgres
-     # - SPRING_DATASOURCE_PASSWORD=DBPASSWORD
-    #depends_on:
-     # - db-auth
-    #ports:
-     # - "8008:8080"
-
-  #chat_service:
-  #  build:
-  #    context: ./chat_service
-  #    dockerfile: Dockerfile
-  #  image: chat_service
-  #  ports:
-   #   - "8000:8080"
+#  auth_service:
+#    build: ./auth_service
+#    image: auth_service
+#    restart: always
+#    depends_on:
+#      - db-auth
+#    ports:
+#      - "8080:8080"
 
   db-auth:
     image: postgres:latest
