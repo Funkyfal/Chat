@@ -14,16 +14,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-    private val jwtAuthFilter: JwtAuthFilter
+    private val jwtAuthFilter: JwtAuthFilter,
+    private val customAuthenticationEntryPoint: CustomAuthenticationEntryPoint
 ) {
 
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         return http
             .csrf { it.disable() }
-            .authorizeHttpRequests {
-                it.anyRequest().authenticated()
-            }
+            .authorizeHttpRequests { it.anyRequest().authenticated() }
+            .exceptionHandling { it.authenticationEntryPoint(customAuthenticationEntryPoint) }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
             .build()

@@ -26,8 +26,8 @@ class ChatKafkaConsumer(
     fun listen(messageJson: String) {
         val node = objectMapper.readTree(messageJson)
         val msg = Message(
-            text = if(node.has("text")) node["text"].asText() else null,
-            fileUrl = if(node.has("fileUrl")) node["fileUrl"].asText() else null,
+            text = if (node.has("text")) node["text"].asText() else null,
+            fileUrl = if (node.has("fileUrl")) node["fileUrl"].asText() else null,
             senderId = node["senderId"].asText(),
             receiverId = node["receiverId"].asText(),
             timestamp = node["timestamp"].asLong()
@@ -46,5 +46,6 @@ class ChatKafkaConsumer(
             redisTemplate.opsForValue().set(key, messages, Duration.ofMinutes(10))
             println("Обновили историю в кэше по ключу: $key")
         }
+
     }
 }

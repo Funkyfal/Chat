@@ -46,6 +46,10 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-redis:3.4.4")
 	implementation("org.springframework.data:spring-data-redis:3.4.4")
 	implementation("io.lettuce:lettuce-core")
+
+	testImplementation("io.mockk:mockk:1.13.4")
+	testImplementation("org.junit.jupiter:junit-jupiter-api")
+	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
 kotlin {
