@@ -53,7 +53,6 @@ class ChatWebSocketHandler(
                             if (activeChat.isNullOrBlank()) {
                                 println("Невозможно переключиться на другой чат, так как он null или пуст")
                                 return@flatMap Mono.empty<Void>()
-                                TODO("сделать эксепшн")
                             }
                             redisTemplate.opsForValue().set("active_chat:$username", activeChat)
                             println("Установлен новый чат $username вместе с $activeChat")
@@ -64,7 +63,6 @@ class ChatWebSocketHandler(
                             if (chatMsg.text.isNullOrBlank() || chatMsg.receiverId.isNullOrBlank()) {
                                 println("При отправке сообщения от $username text или receiverId оказались пустыми")
                                 return@flatMap Mono.empty<Void>()
-                                TODO("сделать эксепшн")
                             }
                             val messagePayload = mapOf(
                                 "text" to chatMsg.text,
@@ -108,7 +106,6 @@ class ChatWebSocketHandler(
                             if(chatMsg.fileUrl.isNullOrBlank() || chatMsg.receiverId.isNullOrBlank()){
                                 println("При отправке сообщения от $username fileUrl или receiverId оказались пустыми")
                                 return@flatMap Mono.empty<Void>()
-                                TODO("сделать эксепшн")
                             }
                             val currentTimestamp = System.currentTimeMillis()
 
@@ -153,7 +150,6 @@ class ChatWebSocketHandler(
                             val errorMsg = "Неверный тип сообщения ${chatMsg.type}"
                             session.send(Mono.just(session.textMessage(errorMsg))).subscribe()
                             Mono.empty<Void>()
-                            TODO("сделать эксепшн")
                         }
                     }
                 } catch (e: Exception) {
@@ -165,7 +161,6 @@ class ChatWebSocketHandler(
                         )
                     ).subscribe()
                     Mono.empty<Void>()
-                    TODO("сделать эксепшн")
                 }
             }
             .doFinally {
