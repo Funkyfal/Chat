@@ -46,6 +46,37 @@ services:
       - kafka
       - redis
 
+  notification_service:
+    build: ./notification_service
+    container_name: notification_service
+    ports:
+      - "8083:8083"
+    environment:
+      - SERVER_PORT=8083
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - KAFKA_ADVERTISED_LISTENERS=kafka:9092
+      - MONGODB_URI=mongodb://root:dbpassword@db-message:27017/admin?authSource=admin
+      - JWT_SECRET=123456781234567812345678123456781234567812345678
+    depends_on:
+      - db-message
+      - kafka
+      - redis
+
+  file_storage_service:
+    build: ./file_storage_service
+    container_name: file_storage_service
+    ports:
+      - "8084:8084"
+    environment:
+      - SERVER_PORT=8084
+      - MINIO_ENDPOINT=http://minio:9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin
+      - MINIO_BUCKET_NAME=chat-files
+    depends_on:
+      - minio
+
   db-auth:
     image: postgres:latest
     restart: always
