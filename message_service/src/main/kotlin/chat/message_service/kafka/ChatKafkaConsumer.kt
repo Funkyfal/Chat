@@ -46,6 +46,5 @@ class ChatKafkaConsumer(
             redisTemplate.opsForValue().set(key, messages, Duration.ofMinutes(10))
             println("Обновили историю в кэше по ключу: $key")
         }
-
     }
 }
