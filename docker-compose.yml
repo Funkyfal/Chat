@@ -1,8 +1,25 @@
 version: '3.8'
+networks:
+  default:
+    name: my-network
+    driver: bridge
+
 services:
-  auth_service:
+  api-gateway-service:
+    build: ./api_gateway_service
+    container_name: api-gateway-service
+    ports:
+      - "8085:8085"
+    depends_on:
+      - auth-service
+      - chat-service
+      - message-service
+      - notification-service
+      - file-storage-service
+
+  auth-service:
     build: ./auth_service
-    container_name: auth_service
+    container_name: auth-service
     ports:
       - "8080:8080"
     environment:
@@ -14,9 +31,9 @@ services:
     depends_on:
       - db-auth
 
-  chat_service:
+  chat-service:
     build: ./chat_service
-    container_name: chat_service
+    container_name: chat-service
     ports:
       - "8081:8081"
     environment:
@@ -29,9 +46,9 @@ services:
       - kafka
       - redis
 
-  message_service:
+  message-service:
     build: ./message_service
-    container_name: message_service
+    container_name: message-service
     ports:
       - "8082:8082"
     environment:
@@ -46,9 +63,9 @@ services:
       - kafka
       - redis
 
-  notification_service:
+  notification-service:
     build: ./notification_service
-    container_name: notification_service
+    container_name: notification-service
     ports:
       - "8083:8083"
     environment:
@@ -63,9 +80,9 @@ services:
       - kafka
       - redis
 
-  file_storage_service:
+  file-storage-service:
     build: ./file_storage_service
-    container_name: file_storage_service
+    container_name: file-storage-service
     ports:
       - "8084:8084"
     environment:

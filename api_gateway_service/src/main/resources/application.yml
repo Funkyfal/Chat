@@ -1,0 +1,29 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: api-gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: auth-service
+          uri: "http://auth-service:8080"
+          predicates:
+            - Path=/**
+        - id: chat-service
+          uri: "ws://chat-service:8081"
+          predicates:
+            - Path=/**
+        - id: message-service
+          uri: "http://message-service:8082"
+          predicates:
+            - Path=/**
+        - id: notification-service
+          uri: "http://notification-service:8083"
+          predicates:
+            - Path=/**
+        - id: file-storage-service
+          uri: "http://file-storage-service:8084"
+          predicates:
+            - Path=/files/**
