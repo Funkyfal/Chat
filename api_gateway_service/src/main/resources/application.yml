@@ -10,19 +10,19 @@ spring:
         - id: auth-service
           uri: "http://auth-service:8080"
           predicates:
-            - Path=/**
+            - Path=/auth/**
         - id: chat-service
           uri: "ws://chat-service:8081"
           predicates:
-            - Path=/**
+            - Path=/ws/**
         - id: message-service
           uri: "http://message-service:8082"
           predicates:
-            - Path=/**
+            - Path=/message/**
         - id: notification-service
           uri: "http://notification-service:8083"
           predicates:
-            - Path=/**
+            - Path=/notifications/**
         - id: file-storage-service
           uri: "http://file-storage-service:8084"
           predicates:
