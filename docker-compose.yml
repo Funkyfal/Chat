@@ -6,7 +6,7 @@ networks:
 
 services:
   api-gateway-service:
-    build: .
+    build: ./api_gateway_service
     container_name: api-gateway-service
     ports:
       - "8085:8085"
@@ -18,7 +18,7 @@ services:
       - file-storage-service
 
   auth-service:
-    build: .
+    build: ./auth_service
     container_name: auth-service
     ports:
       - "8080:8080"
@@ -32,7 +32,7 @@ services:
       - db-auth
 
   chat-service:
-    build: .
+    build: ./chat_service
     container_name: chat-service
     ports:
       - "8081:8081"
@@ -47,7 +47,7 @@ services:
       - redis
 
   message-service:
-    build: .
+    build: ./message_service
     container_name: message-service
     ports:
       - "8082:8082"
@@ -64,7 +64,7 @@ services:
       - redis
 
   notification-service:
-    build: .
+    build: ./notification_service
     container_name: notification-service
     ports:
       - "8083:8083"
@@ -81,7 +81,7 @@ services:
       - redis
 
   file-storage-service:
-    build: .
+    build: ./file_storage_service
     container_name: file-storage-service
     ports:
       - "8084:8084"
