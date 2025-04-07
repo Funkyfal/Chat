@@ -66,36 +66,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "all users",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiaWF0IjoxNzQzOTY5ODQ4LCJleHAiOjE3NDM5NzM0NDh9.ql6seUe3xaerUrCA-HbHiTpAgeeQwoiJAUcDFGcP1SA",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8085/auth/all",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8085",
-							"path": [
-								"auth",
-								"all"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
