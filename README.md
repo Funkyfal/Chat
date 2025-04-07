@@ -5,7 +5,7 @@
 
 ---
 #### Ниже представлено gif-изображение работы приложения.
-![API GATEWAY](https://github.com/user-attachments/assets/3494649e-f0d2-447e-9bc7-f3b1092c0afc)
+![API+GATEWAY](https://github.com/user-attachments/assets/8b1a150b-6f3b-43df-9ce1-22bc9c021d3c)
 
 ---
 #### Коллекция запросов в Postman прикреплена в репозитории. Также снизу можете увидеть список эндпоинтов.
