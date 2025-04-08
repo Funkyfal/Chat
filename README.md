@@ -49,7 +49,8 @@ POST /auth/login
 
 | Parameter | Type     | Description                                        |
 | :-------- | :------- | :------------------------------------------------- |
-| `token` | `string` | **Required**. Токен, полученный после логина.                    |
+| `token` | `string` | **Required**. Токен, полученный после логина.        |
+| `type` | `string` | 
 
 ---
 ## Message-service
